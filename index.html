@@ -16,12 +16,15 @@
         height: 100vh;
         width: 100vw;
         position: relative;
-        background-color: rgb(52, 51, 51);
+        background-color: #222;
         text-transform: capitalize;
     }
     #form{
         /* border: 1px solid red; */
         margin:auto;
+    }
+    #inputCityName{
+        font-weight: bolder;
     }
     input{
 
@@ -31,6 +34,8 @@
         border-radius: 20px;
         border: none;
         outline: none;
+        font-weight: bolder;
+
     }
     #details{
         display: none;
@@ -38,14 +43,19 @@
     #details p{
         margin:10px;
     }
+
     #btn{
-        margin:auto;
-        padding: 10px;
-        font-weight: bolder;
-        border-radius: 20px;
-        border:none;
-        box-shadow: 0 0 5px grey;
-        outline: none;
+        display: inline-block;
+        /* padding-top: 5px; */
+        vertical-align:middle;
+        border-radius: 50%;
+        /* border:1px solid white; */
+        cursor: pointer;
+    }
+    #btn img{
+        height: 20px;
+        width: 20px;
+        
     }
 
     #card{
@@ -82,6 +92,7 @@
         color: white;
         padding: 20px;
         font-size: 12px;
+
     }
 
 
@@ -93,10 +104,10 @@
         <div id="card">
 
             <div id="form" >
-                <input type="text" id="inputCityName" required placeholder="bangalore" value="" autocomplete="off"></input>
-                <button id="btn">
-                  <span>&rarr;</span>
-                </button>
+                <input type="text" style="font-weight: bold; letter-spacing: 0.8px; font-size: 14px;" id="inputCityName" required placeholder="bangalore" value="" autocomplete="off"></input>
+                <div id="btn">
+                    <img src="/search.png" alt="">
+                </div>
         
             </div>
 
