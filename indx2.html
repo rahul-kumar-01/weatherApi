@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin:0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        font-weight: lighter;
+    }
+    #main{
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        background-color: rgb(52, 51, 51);
+        text-transform: capitalize;
+    }
+    #form{
+        /* border: 1px solid red; */
+        margin:auto;
+    }
+    input{
+
+        padding: 10px;
+        width: 65%;
+        margin: 20px 5px 20px 20px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+    }
+    #details{
+        display: none;
+    }
+    #details p{
+        margin:10px;
+    }
+    #btn{
+        margin:auto;
+        padding: 10px;
+        font-weight: bolder;
+        border-radius: 20px;
+        border:none;
+        box-shadow: 0 0 5px grey;
+        outline: none;
+    }
+
+    #card{
+        box-shadow: 0 0 20px white;
+        border-radius: 20px;
+        color:white;
+        background: linear-gradient(135deg,#00feba,#5b548a);
+        padding: 2%;
+        position: absolute;
+        top:10%;
+        left:50%;
+        transform: translateX(-50%);
+        min-width: 250px;
+    }
+    .logo{
+        position: relative;
+        left:50%;
+        transform: translateX(-50%);
+        padding-top: 20px;
+        height: 10vh;
+        width: 10vh;
+        margin:auto;
+    }
+    .text{
+        font-size: 40px;
+        display: block;
+        margin:auto;
+        text-align: center;
+    }
+    .rahul{
+        position: absolute;
+        right: 0%;
+        bottom: 0%;
+        color: white;
+        padding: 20px;
+        font-size: 12px;
+    }
+
+
+</style>
+
+<body>  
+    <div id="main">
+
+        <div id="card">
+
+            <div id="form" >
+                <input type="text" id="inputCityName" required placeholder="bangalore" value="" autocomplete="off"></input>
+                <button id="btn">
+                  <span>&rarr;</span>
+                </button>
+        
+            </div>
+
+            <div id="details">
+                <div>
+                    <img src="logo.png" alt="" class="logo">
+                </div>
+                <p class="text">
+                      <span class="temp" >  </span><span style="font-size: x-large;">C</span>
+                </p>
+                <p class="text">
+                    <span id="city">  </span>
+                </p>
+
+                
+                <div style="position: relative; display: flex; padding-top: 20px;">
+                    <div style="flex:1; text-align: center;">
+                        <span id="description">  </span>
+                    </div>
+                    <div style="flex:1; text-align: center;">
+                        <span id="wind">  </span>
+                    </div>
+                </div>
+               
+
+
+              
+                </p>
+
+            </div>
+            
+        </div>
+        <p class="rahul">@ code by rahul</p>
+                
+        
+    </div>
+
+        
+    
+</body>
+<script>
+    async function handleBtnClick(){
+        
+        const input = document.getElementById('inputCityName');
+        const cityName = input.value;
+        city.textContent = cityName;
+        let lat;
+        let lon;
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=8fffcfdc776d606671775f91c7011bac`);
+        const movies = await response.json();
+        console.log(movies);
+        movies.map((data,i)=>{
+            lat = (data.lat);
+            lon = (data.lon);
+        })
+
+        await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=8fffcfdc776d606671775f91c7011bac`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const weatherDetails = data.current.weather;
+                const temp = (data.current.temp-273).toFixed(2);
+                const wind = (data.current.wind_speed*1.6).toFixed(2);
+                tempPara.textContent = ` ${temp}°`;
+                windPara.textContent = `Wind : ${wind} kmph`;
+                weatherDetails.map((data,index)=>{
+                   descriptionPara.textContent = `${data.description}`;
+                })
+        })
+        details.style.display = "block";
+
+    }
+    const btn = document.getElementById('btn');
+    btn.addEventListener('click',handleBtnClick);
+    const tempPara = document.getElementsByClassName('temp')[0];
+    const descriptionPara = document.getElementById('description');
+    const windPara = document.getElementById('wind');
+    const details = document.getElementById('details');
+    const city = document.getElementById('city');
+
+    
+</script>
+</html>
